@@ -44,53 +44,5 @@
     <!-- Your webpage content goes here -->
     
     </body>
-<h2>CSV File Upload</h2>
-
-    <form id="csvForm" enctype="multipart/form-data">
-        <label for="csvFile">Select a CSV file:</label>
-        <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
-        <br>
-        <button type="button" onclick="uploadFile()">Upload File</button>
-    </form> 
-
-    <script>
-        function uploadFile() {
-            var fileInput = document.getElementById('csvFile');
-            var file = fileInput.files[0];
-
-            if (file) {
-                alert('File selected: ' + file.name);
-
-                // You can perform additional actions with the selected file here.
-                // For example, you can use FileReader to read the content of the file.
-
-                // Example: Reading content of the file
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var content = e.target.result;
-                    console.log('File content:', content);
-                };
-                reader.readAsText(file);
-            } else {
-                alert('Please select a CSV file');
-            }
-        }
-    </script>
-
-
-<p>Choose a sorting algorthinem</p>
-
-<form action="/action_page.php">
-  <label for="choicealgo">Choose an algorithm:</label>
-  <select name="algo" id="algo">
-    <option value="one">cat</option>
-    <option value="two">dog</option>
-    <option value="three">popcorn</option>
-    <option value="four">book</option>
-  </select>
-  <br><br>
-  <input type="submit" value="Submit">
-</form>
-
 
 {% endblock %}
