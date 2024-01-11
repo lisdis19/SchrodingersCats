@@ -33,7 +33,7 @@ if model_csv_file is not None:
 # first, we need to pop compounds that do not have a standard value (I saw some of them here)
 model_csv_file_retained = model_csv_file.loc[model_csv_file['Standard Value'] != None]
 model_csv_file_retained_2 = model_csv_file_retained.loc[model_csv_file_retained['Smiles'] != None]
-model_csv_file_retained_3 = model_csv_file_retained_2.loc[model_csv_file_retained_2['Standard Value'] != "NaN"]
+model_csv_file_retained_3 = model_csv_file_retained_2.loc[model_csv_file_retained_2['Standard Value'] != "10000"]
 #print(len(model_csv_file))
 #print(len(model_csv_file_retained))
 #print(len(model_csv_file_retained_2))
@@ -82,8 +82,7 @@ for i in range(1024):  # Assuming nBits is 1024
 model_csv_file_retained_only_2.to_csv('output_file_with_morgan.csv', index=False)
 activity = []
 for value in range(0, len(model_csv_file_retained_only_2)):
-    
-    if model_csv_file_retained_only_2['Standard Value'] < 500:
+    if model_csv_file_retained_only_2['Standard Value'] < 1000:
         activity.append('1')
     else:
         activity.append('0')
