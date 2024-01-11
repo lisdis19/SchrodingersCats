@@ -11,6 +11,8 @@ from rdkit.Chem import MACCSkeys
 
 from rdkit.Chem import rdMolTransforms
 from rdkit.Chem.Draw import rdMolDraw2D, rdDepictor
+from rdkit.Chem.MolStandardize import rdMolStandardize
+
 rdDepictor.SetPreferCoordGen(True)
 
 # Read CSV file with error handling
@@ -50,12 +52,27 @@ mol_object_list = []
 bad_smiles = 0
 for smi in model_csv_file_retained_only['Smiles']:
     try:  # Try converting the SMILES to a mol object
+        rdMolStandardize.StandardizeSmiles(smi)
         mol = Chem.MolFromSmiles(smi)
         mol_object_list.append(mol)
     except:  # Print the SMILES if there was an error in converting
         mol_object_list.append('bad_molecule')
         bad_smiles += 1
-        print(smi)
-print(bad_smiles)
+        #print(smi)
+#print(bad_smiles)
 model_csv_file_retained_only['Mol'] = mol_object_list
 model_csv_file_retained_only_2 = model_csv_file_retained_only.loc[model_csv_file_retained_only['Mol'] != "bad_molecule"]
+
+# create Morgan fingerprint structure representation
+morgan_finger = []
+bit_morgan = [{}] #label fingerprints
+i = 0
+for mol in model_csv_file_retained_only_2['Mol']:
+  bit_morgan.append({})
+  morgan_finger.append(
+      rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
+                                                     radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
+  )
+  i += 1
+  # radius, more more options, nBits, the same
+
