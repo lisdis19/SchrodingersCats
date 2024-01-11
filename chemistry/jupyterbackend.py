@@ -5,12 +5,12 @@ import stat
 
 from rdkit import Chem, RDConfig, rdBase, DataStructs
 from rdkit.Chem import PandasTools, AllChem, Draw, rdMolDescriptors, GraphDescriptors, Descriptors, rdFMCS
-from rdkit.Chem.Draw import IPythonConsole, rdDepictor, rdMolDraw2D
+from rdkit.Chem.Draw import rdDepictor, rdMolDraw2D
 from rdkit.ML.Descriptors import MoleculeDescriptors
 from rdkit.Chem import MACCSkeys
 
 from rdkit.Chem import rdMolTransforms
-from rdkit.Chem.Draw import rdMolDraw2D, rdDepictor, IPythonConsole
+from rdkit.Chem.Draw import rdMolDraw2D, rdDepictor
 rdDepictor.SetPreferCoordGen(True)
 
 # Read CSV file with error handling
@@ -58,5 +58,3 @@ for smi in model_csv_file_retained_only['Smiles']:
         print(smi)
 print(bad_smiles)
 model_csv_file_retained_only['Mol'] = mol_object_list
-model_csv_file_retained_only_2 = model_csv_file_retained_only.loc[model_csv_file_retained_only['Mol'] != "bad_molecule"]
-#print(len(model_csv_file_retained_only_2))

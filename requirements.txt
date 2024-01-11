@@ -8,3 +8,4 @@ Pillow==10.1.0
 rdkit==2023.9.2
 sqlparse==0.4.4
 typing-extensions==4.8.0
+
