@@ -63,6 +63,21 @@ for smi in model_csv_file_retained_only['Smiles']:
 model_csv_file_retained_only['Mol'] = mol_object_list
 model_csv_file_retained_only_2 = model_csv_file_retained_only.loc[model_csv_file_retained_only['Mol'] != "bad_molecule"]
 
+activity = []
+for row in range(0, len(model_csv_file_retained_only_2)):
+    try:
+    #print("...")
+      if float(model_csv_file_retained_only_2['Standard Value'][row]) < 1000:
+          activity.append('1')
+      else:
+          activity.append('0')
+    except:
+      activity.append('0')
+      #print("You lost")
+
+model_csv_file_retained_only_2['Activity'] = activity
+model_csv_file_retained_only_2['Activity'] = model_csv_file_retained_only_2['Activity'].astype(float)
+
 # create Morgan fingerprint structure representation
 morgan_finger = []
 bit_morgan = [{}] #label fingerprints
@@ -75,16 +90,8 @@ for mol in model_csv_file_retained_only_2['Mol']:
   )
   i += 1
   # radius, more more options, nBits, the same
+morgan_np = np.array(morgan_finger)
+morgan_df = pd.DataFrame(morgan_np)
+morgan_df.to_csv('morgan_df_features.csv')
+model_csv_file_retained_only_2.to_csv('activities.csv')
 
-for i in range(1024):  # Assuming nBits is 1024
-    model_csv_file_retained_only_2[f'Morgan_Fingerprint_{i}'] = [fp[i] for fp in morgan_finger]
-
-model_csv_file_retained_only_2.to_csv('output_file_with_morgan.csv', index=False)
-activity = []
-for value in range(0, len(model_csv_file_retained_only_2)):
-    if model_csv_file_retained_only_2['Standard Value'] < 1000:
-        activity.append('1')
-    else:
-        activity.append('0')
-
-model_csv_file_retained_only_2['Activity'] = activity
