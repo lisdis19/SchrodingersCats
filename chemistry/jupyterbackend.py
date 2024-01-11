@@ -76,3 +76,7 @@ for mol in model_csv_file_retained_only_2['Mol']:
   i += 1
   # radius, more more options, nBits, the same
 
+for i in range(1024):  # Assuming nBits is 1024
+    model_csv_file_retained_only_2[f'Morgan_Fingerprint_{i}'] = [fp[i] for fp in morgan_finger]
+
+model_csv_file_retained_only_2.to_csv('output_file_with_morgan.csv', index=False)
