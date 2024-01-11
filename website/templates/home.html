@@ -8,7 +8,7 @@
         <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
         <br>
         <button type="button" onclick="uploadFile()">Upload File</button>
-    </form>
+    </form> 
 
     <script>
         function uploadFile() {
@@ -33,4 +33,21 @@
             }
         }
     </script>
+
+
+<p>Choose a sorting algorthinem</p>
+
+<form action="/action_page.php">
+  <label for="choicealgo">Choose an algorithm:</label>
+  <select name="algo" id="algo">
+    <option value="one">cat</option>
+    <option value="two">dog</option>
+    <option value="three">popcorn</option>
+    <option value="four">book</option>
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+
 {% endblock %}
