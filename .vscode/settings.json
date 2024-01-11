@@ -1,0 +1,8 @@
+{
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "[html][jinja][jinja-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "python.analysis.indexing": true,
+  "python.analysis.autoImportCompletions": true
+}

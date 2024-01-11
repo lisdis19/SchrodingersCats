@@ -1,0 +1,10 @@
+asgiref==3.7.2
+black==23.11.0
+Django==4.2.8
+djlint==1.34.0
+networkx==3.2.1
+numpy==1.26.2
+Pillow==10.1.0
+rdkit==2023.9.2
+sqlparse==0.4.4
+typing-extensions==4.8.0
