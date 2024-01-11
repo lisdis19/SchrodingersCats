@@ -80,3 +80,12 @@ for i in range(1024):  # Assuming nBits is 1024
     model_csv_file_retained_only_2[f'Morgan_Fingerprint_{i}'] = [fp[i] for fp in morgan_finger]
 
 model_csv_file_retained_only_2.to_csv('output_file_with_morgan.csv', index=False)
+activity = []
+for value in range(0, len(model_csv_file_retained_only_2)):
+    
+    if model_csv_file_retained_only_2['Standard Value'] < 500:
+        activity.append('1')
+    else:
+        activity.append('0')
+
+model_csv_file_retained_only_2['Activity'] = activity
