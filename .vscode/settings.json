@@ -4,5 +4,6 @@
     "editor.defaultFormatter": "monosans.djlint"
   },
   "python.analysis.indexing": true,
-  "python.analysis.autoImportCompletions": true
+  "python.analysis.autoImportCompletions": true,
+  "C_Cpp.errorSquiggles": "enabled"
 }
