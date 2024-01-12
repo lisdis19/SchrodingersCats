@@ -105,14 +105,13 @@ for mol in model_csv_file_retained_only_2['Mol']:
   # radius, more more options, nBits, the same
 morgan_np = np.array(morgan_finger)
 morgan_df = pd.DataFrame(morgan_np)
-morgan_df.to_csv('morgan_df_features.csv')
-model_csv_file_retained_only_2.to_csv('activities.csv')
+morgan_df.to_csv('morgan_df_features.csv', index=None)
+model_csv_file_retained_only_2.to_csv('activities.csv', index=None)
 
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
-
-
+print(morgan_df.shape)
 
 
 #print(ConfusionMatrixDisplay(cm))
