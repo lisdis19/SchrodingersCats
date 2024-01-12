@@ -181,3 +181,7 @@ def make_prediction():
             picture = Draw.MolsToGridImage(best_data['Mol'], useSVG=True)
             print(picture)
             return picture
+
+output=process_csv(morgan_df)   
+print(output)
+prediction(morgan_df, output)
