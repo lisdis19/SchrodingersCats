@@ -128,12 +128,17 @@
     }
 
     function submitForm() {
-        if(algorithm != "none"){
-            //call S function for the selected algorithm
-        }else{
-            event.preventDefault();
-            alert("Algorithm cannot be none");
-        }
+        if (algorithm != "none") {
+                // Call S function for the selected algorithm
+
+                // Add a delay of 5 seconds before navigating to the next page
+                setTimeout(function () {
+                    window.location.href = "{% url 'step3' %}";
+                }, 5000);
+            } else {
+                event.preventDefault();
+                alert("Algorithm cannot be none");
+            }
         
     }
 
