@@ -33,8 +33,7 @@ model_csv_file_retained_only_2 = pd.read_csv('activities.csv')
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
-
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True, random_seed=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True, random_state=42)
 rf=RandomForestClassifier()
 rf.fit(X_train, y_train)
 predict=rf.predict(X_test)
@@ -151,7 +150,9 @@ def make_prediction():
         picture, uploaded_data = process_csv('user_input.csv')
         morgan_finger = []
         i = 0
+        bit_morgan = [{}] 
         for mol in uploaded_data['Mol']:
+            bit_morgan.append({})
             morgan_finger.append(
             rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
@@ -159,6 +160,7 @@ def make_prediction():
         i += 1
         morgan_np = np.array(morgan_finger)
         morgan_df_user = pd.DataFrame(morgan_np)
+
         predict=rf.predict(morgan_df_user)
         prediction_data = np.asarray(predict)
         uploaded_data['Predicted_Activity'] = prediction_data
