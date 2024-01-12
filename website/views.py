@@ -7,12 +7,11 @@ from django.shortcuts import render, HttpResponse
 #def home(request):
     #return render(request, "home.html")
 
-#uploaded_data = upload_csv(
-    #user_file_input)
 
+
+#uploaded_data = upload_csv('file_path')
 #then
 #parsed_data = parse_data(uploaded_data) 
-
 #visualize_molecules = visualize_molecules(parsed_data) #this is a picture file
 
 

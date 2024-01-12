@@ -15,6 +15,18 @@ from rdkit.Chem.MolStandardize import rdMolStandardize
 
 rdDepictor.SetPreferCoordGen(True)
 
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+import os
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score, cross_val_predict
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import roc_auc_score
+
+from sklearn import tree
+
 # Read CSV file with error handling
 
 try:
@@ -95,29 +107,6 @@ morgan_df = pd.DataFrame(morgan_np)
 morgan_df.to_csv('morgan_df_features.csv')
 model_csv_file_retained_only_2.to_csv('activities.csv')
 
-
-import numpy as np
-import pandas as pd
-import copy
-import stat
-from rdkit import Chem, RDConfig, rdBase, DataStructs
-from rdkit.Chem import PandasTools, AllChem, Draw, rdMolDescriptors, GraphDescriptors, Descriptors, rdFMCS
-from rdkit.Chem.Draw import rdDepictor, rdMolDraw2D
-from rdkit.ML.Descriptors import MoleculeDescriptors
-
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-import os
-
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score, cross_val_predict
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import roc_auc_score
-
-from sklearn import tree
-
-
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
@@ -128,10 +117,6 @@ predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 
-def prediction(test):
-    predict=rf.predict(test)
-
-
 #second model
 
 #clf = tree.DecisionTreeClassifier()
@@ -139,20 +124,20 @@ def prediction(test):
 #predicted = clf.predict(X_test)
 #cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predicted))
 #print(cm)
-
 #dot_data = tree.export_graphviz(clf, out_file=None)
 
-
-def upload_csv(uploaded_data_input):
+file_path = 'user_data.csv'
+def upload_csv(file_path):
     try:
-        uploaded_data = pd.read_csv('chemistry/hiv_dataset_3.csv', sep=',')  # Adjust the delimiter if needed
+        uploaded_data = pd.read_csv(file_path, sep=',')  # Adjust the delimiter if needed
     except pd.errors.ParserError:
         print("Error reading CSV file. Check for formatting issues in the file.")
         uploaded_data = None  # You can choose to handle this differently based on your needs
     # Continue with the rest of your code, if applicable
     # For example, you can print the DataFrame or perform further operations
     if uploaded_data is not None:
-        print("CSV Model File Found!")
+        print("CSV File Found! Going to work on it now")
+        return uploaded_data
 
 def parse_data(uploaded_data):
     mol_object_list = []
@@ -166,9 +151,10 @@ def parse_data(uploaded_data):
             mol_object_list.append('bad_molecule')
             bad_smiles += 1
         #print(smi)
-#print(bad_smiles)
+    #print(bad_smiles)
     uploaded_data['Mol'] = mol_object_list
     uploaded_data = uploaded_data.loc[uploaded_data['Mol'] != "bad_molecule"]
+    return uploaded_data
 
 def visualize_molecules(uploaded_data):
     number_molecules = len(uploaded_data)
@@ -177,20 +163,35 @@ def visualize_molecules(uploaded_data):
     else:
         return Draw.MolsToGridImage(uploaded_data['Mol'])
 
-
 def create_fingerprints(uploaded_data): # create Morgan fingerprint structure representation
     morgan_finger = []
-    bit_morgan = [{}] #label fingerprints
     i = 0
     for mol in uploaded_data['Mol']:
-        bit_morgan.append({})
         morgan_finger.append(
         rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
             )
     i += 1
-            # radius, more more options, nBits, the same
     morgan_np = np.array(morgan_finger)
     morgan_df_user = pd.DataFrame(morgan_np)
-    morgan_df_user.to_csv('morgan_df_features_forprediction.csv')
+    #morgan_df_user.to_csv('morgan_df_features_forprediction.csv')
     return morgan_df_user
+
+def prediction(morgan_df_user, uploaded_data):
+    predict=rf.predict(morgan_df_user)
+    prediction_data = np.asarray(predict)
+    uploaded_data['Predicted_Activity'] = prediction_data
+    return uploaded_data
+
+def write_csv(uploaded_data):
+    user_data = uploaded_data.drop('Mol', axis='columns')
+    user_data.to_csv('user_prediction.csv')
+    return user_data
+
+def visualize_molecules_prediction(user_data):
+    best_data = user_data.iloc[user_data['Predicted_Activity'] == 1]
+    number_molecules = len(best_data)
+    if number_molecules > 20:
+        return Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+    else:
+        return Draw.MolsToGridImage(best_data['Mol'])
