@@ -1,46 +1,32 @@
-import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from rdkit import Chem
+from rdkit.Chem import rdMolDescriptors
 
-# Function to apply a specific predictive model
-def apply_predictive_model(model_type, data):
-    # Add switch statement logic here for different predictive models
-    if model_type == "model1":
-        # Apply model 1 to the data
-        # Replace the following line with the actual implementation of your model 1
-        print("Applying Model 1 to the data...")
-        result = data  # Placeholder, replace this line with actual model 1 logic
-    elif model_type == "model2":
-        # Apply model 2 to the data
-        # Replace the following line with the actual implementation of your model 2
-        print("Applying Model 2 to the data...")
-        result = data  # Placeholder, replace this line with actual model 2 logic
-    else:
-        print("Invalid model selection")
+# Load your molecular CSV file into a pandas DataFrame
+file_path = 'chemistry/hiv_dataset_3.csv'
+molecular_data = pd.read_csv(file_path)
 
-    return result
+# Assuming your molecular data has features (X) and labels (y)
+# Replace 'your_feature_columns' with the actual column names for features
+X = molecular_data[['Smiles']]
+# Replace 'your_label_column' with the actual column name for labels
+y = molecular_data['Molecule ChEMBL ID']
 
-# Read CSV file with user input and error handling
-while True:
-    user_input = input("Enter the path to the CSV file: ")
-    try:
-        model_csv_file = pd.read_csv(user_input, sep=',')  # Adjust the delimiter if needed
-        break  # Break the loop if CSV file is successfully read
-    except pd.errors.ParserError:
-        print("Error reading CSV file. Check for formatting issues in the file.")
+# Split the data into training and test sets
+test_size = 0.2  # Adjust the test_size as needed
+random_state = 42  # Set a random seed for reproducibility
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
-# Continue with the rest of your code, if applicable
-# For example, you can print the DataFrame or perform further operations
-if model_csv_file is not None:
-    print("CSV File Found!")
-    print(model_csv_file.columns)
+# Select a random SMILES value from the DataFrame
+random_smiles = X_train.sample(n=1).iloc[0]['Smiles']
 
-    # Add switch statement for predictive model selection
-    model_type = input("Select predictive model (model1 or model2): ")
+# Create a molecule from the random SMILES
+m = Chem.MolFromSmiles(random_smiles)
 
-    # Process the data based on the selected model
-    processed_data = apply_predictive_model(model_type, model_csv_file)
-
-    # Continue with the rest of your code as needed
-    # For example, you can print the processed data or perform further operations
-    print(processed_data)
+# Calculate and print molecular properties
+properties = rdMolDescriptors.Properties()
+names = properties.GetPropertyNames()
+values = properties.ComputeProperties(m)
+for name, value in zip(names, values):
+    print(f"{name}: {value}")

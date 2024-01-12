@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import copy
 import stat
 
@@ -112,10 +113,11 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score, cross_val_predict
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 from sklearn.metrics import roc_auc_score
 
 from sklearn import tree
+
 
 
 features = morgan_df
@@ -128,17 +130,32 @@ predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 
-def prediction(test):
-    predict=rf.predict(test)
-
-
 #second model
 
-#clf = tree.DecisionTreeClassifier()
-#clf = clf.fit(X_train, y_train)
-#predicted = clf.predict(X_test)
-#cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predicted))
-#print(cm)
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X_train, y_train)
+predicted = clf.predict(X_test)
+cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predicted))
+print(dir(cm))
+print(ConfusionMatrixDisplay(cm))
 
-#dot_data = tree.export_graphviz(clf, out_file=None)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
 
+disp.plot()
+# hide plt.show() if you want to get the byte data below.
+plt.show()
+
+dot_data = tree.export_graphviz(clf, out_file=None)
+
+# uncomment below to get the byte data and comment plt.show(), if you dont it will truncate the data.
+# from io import BytesIO
+# import base64
+
+# # Save the plot to a BytesIO object
+# buffer = BytesIO()
+# plt.savefig(buffer, format='png')
+# buffer.seek(0)
+
+# # Encode the BytesIO content to base64
+# plot_data = base64.b64encode(buffer.read()).decode()
+# print(plot_data)
