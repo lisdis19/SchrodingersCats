@@ -223,4 +223,27 @@ def process_csv(file_path):
                 #print(bad_smiles)
         uploaded_data['Mol'] = mol_object_list
         uploaded_data = uploaded_data.loc[uploaded_data['Mol'] != "bad_molecule"]
-        return uploaded_data
+        number_molecules = len(uploaded_data)
+        if number_molecules > 20:
+            picture = Draw.MolsToGridImage(uploaded_data['Mol'].iloc[0:20]) #choose first 20 molecules
+            return picture, uploaded_data
+        else:
+            picture = Draw.MolsToGridImage(uploaded_data['Mol'])
+            return picture, uploaded_data
+
+def make_prediction(uploaded_data):
+    morgan_finger = []
+    i = 0
+    for mol in uploaded_data['Mol']:
+        morgan_finger.append(
+        rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
+                                                     radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
+            )
+    i += 1
+    morgan_np = np.array(morgan_finger)
+    morgan_df_user = pd.DataFrame(morgan_np)
+    predict=rf.predict(morgan_df_user)
+    prediction_data = np.asarray(predict)
+    uploaded_data['Predicted_Activity'] = prediction_data
+    return uploaded_data
+
