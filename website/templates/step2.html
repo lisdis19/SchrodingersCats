@@ -53,6 +53,7 @@
         color: aliceblue;
         padding: 0.5rem 1rem;
         border-radius: 10px;
+        margin-top: 6px;
     }
     .dropdown h1{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -64,8 +65,8 @@
 
     .dropdown h3{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 30px;
-        font-weight: 40px;
+        font-size: 20px;
+        font-weight: 30px;
         color: aliceblue;
         margin: 2rem;
     }
@@ -73,6 +74,7 @@
     .dropdown p{
         color: rgb(181, 201, 219);
         margin:0;
+        padding: 0rem 2rem;
     }
 
     .molecules-img{
@@ -102,15 +104,14 @@
   {% csrf_token %}
     <div class="dropdown-img">
         {% load static %}
-        <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="400px" height="400px" alt="molecules">
+        <img src="{% static 'website/uploaded_molecules.png' %}" width="400px" height="400px" alt="molecules">
     </div>
     <div class="dropdown-txt">
     
-    <h1>Thanks for this HIV dataset, here are your molecules!</h1>
-    <h3>This looks like a binary dataset..</h3>
-    <p>We suggest a Random Forest Algorithm for this dataset!</p>
+    <h1>Thanks for this HIV dataset, here is a preview of your molecules!</h1>
+    <h3>We are going to make a prediction of activity with your molecules!</h3>
+    <p>We are using our previously developed model to predict. We are going to show you now some of the active molecules from your dataset</p>
   <label for="choicealgo"></label>
-  <br><br>
   <a href="{% url 'step3' %}"><button type="submit">Predict</button></a>
     </div>
 </div>
@@ -138,5 +139,8 @@
     }
 
     //now that algorithm is selected, use the appropriate algorithm function
+
+    
+
 </script>
 {% endblock %}
