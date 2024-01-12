@@ -2,11 +2,11 @@
 {% block content %}
 <h2>CSV File Upload</h2>
 
-    <form id="csvForm" enctype="multipart/form-data">
+    <form id="csvForm" enctype="multipart/form-data" method="post" action="{%%}">
         <label for="csvFile">Select a CSV file:</label>
         <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
         <br>
-        <button type="button" onclick="uploadFile()">Upload File</button>
+        <button type="submit">Upload File</button>
     </form> 
 
     <script>
