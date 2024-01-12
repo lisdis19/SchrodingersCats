@@ -199,3 +199,28 @@ def visualize_molecules_prediction(user_data):
     else:
         picture = Draw.MolsToGridImage(best_data['Mol'])
         return picture
+    
+def process_csv(file_path):
+    try:
+        uploaded_data = pd.read_csv(file_path, sep=',')  # Adjust the delimiter if needed
+    except pd.errors.ParserError:
+        print("Error reading CSV file. Check for formatting issues in the file.")
+        uploaded_data = None  # You can choose to handle this differently based on your needs
+    # Continue with the rest of your code, if applicable
+    # For example, you can print the DataFrame or perform further operations
+    if uploaded_data is not None:
+        mol_object_list = []
+        bad_smiles = 0
+        for smi in uploaded_data['Smiles']:
+            try:  # Try converting the SMILES to a mol object
+                rdMolStandardize.StandardizeSmiles(smi)
+                mol = Chem.MolFromSmiles(smi)
+                mol_object_list.append(mol)
+            except:  # Print the SMILES if there was an error in converting
+                mol_object_list.append('bad_molecule')
+                bad_smiles += 1
+                #print(smi)
+                #print(bad_smiles)
+        uploaded_data['Mol'] = mol_object_list
+        uploaded_data = uploaded_data.loc[uploaded_data['Mol'] != "bad_molecule"]
+        return uploaded_data
