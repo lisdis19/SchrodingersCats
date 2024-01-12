@@ -73,7 +73,6 @@
     <a href="{% url 'step1' %}">Services</a>
     <a href="#{% url 'contact' %}">Contact</a>
 </nav>
-<img src="{% url 'make-predict' %}" height="70px" width="70px" alt="">
 <div class="dropdown">
 <form  method="POST" >
   {% csrf_token %}
@@ -92,7 +91,8 @@
 </div>
 
 <div class="csv__img-results">
-
+    {% load static %}
+    <img src="{% static 'website/schrodinger.png' %}" width="60px" height="60px" alt="logo">
 </div>
 
 </body>

@@ -15,8 +15,8 @@ from chemistry.backendUser import process_molecular_data #describe
 #visualize_molecules = visualize_molecules(parsed_data) #this is a picture file
 
 
-#def step1(request):
-#    return render(request, "website/step1.html")
+def home(request):
+    return render(request, "home.html")
 
 
 
