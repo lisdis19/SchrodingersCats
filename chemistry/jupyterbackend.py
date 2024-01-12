@@ -263,5 +263,3 @@ def make_prediction(file_path):
         else:
             picture = Draw.MolsToGridImage(best_data['Mol'])
             return picture
-
-
