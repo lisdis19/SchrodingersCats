@@ -3,7 +3,7 @@ from chemistry.jupyterbackend import process_csv
 from chemistry.backendUser import process_molecular_data #describe
 # View is where you allow for contents to be seen
 # Create your views here.
-from apply_predictive_model import backendUser
+#from apply_predictive_model import backendUser
 # below is a func/method , it "renders" the html
 #def home(request):
     #return render(request, "home.html")
