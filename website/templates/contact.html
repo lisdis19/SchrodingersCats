@@ -58,8 +58,40 @@
         margin-bottom: 2rem;
     }
 
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+      
+      input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
+      
+      .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+
     
 </style>
+
+
 <body>
     {% csrf_token %}
 
@@ -73,50 +105,26 @@
     <a href="{% url 'step1' %}">Services</a>
     <a href="#{% url 'contact' %}">Contact</a>
 </nav>
-<img src="{% url 'make-predict' %}" height="70px" width="70px" alt="">
-<div class="dropdown">
-<form  method="POST" >
-  {% csrf_token %}
-    <h1>Choose an algorithm:</h1>
-  <label for="choicealgo"></label>
-  <select name="choicealgo" id="choicealgo" onchange="algorithmValue(this)">
-    <option value="none">None</option>
-    <option value="graph">Graph</option>
-    <option value="mean-squared">Visualize</option>
-    <option value="describe">Describe</option>
-    <option value="predict">Binary Classify</option>
-  </select>
-  <br><br>
-  <a href="{% url 'step3' %}"><button type="submit" onclick="submitForm()">Submit</button></a>
-</form>
-</div>
 
-<div class="csv__img-results">
 
-</div>
+<h3>Contact Form</h3>
 
-</body>
-<script>
-    //This section of code stores the value of the dropdown menu
-    //The menu values can be: graph, mean-squared, describe, and predict
-    console.log("you are on step2");
-    var algorithm = "";
-    function algorithmValue(choicealgo) {
-        event.preventDefault();
-        algorithm = choicealgo.value;
-        console.log(algorithm)
-    }
+<div class="container">
+    <form action="/action_page.php">
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="John">
+  
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Doe">
+  
+      <label for="subject">Subject</label>
+      <textarea id="subject" name="subject" placeholder="Lorem ipsum dolor sit amet..." style="height:200px"></textarea>
+  
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  
+  </body>
 
-    function submitForm() {
-        if(algorithm != "none"){
-            //call the function for the selected algorithm
-        }else{
-            event.preventDefault();
-            alert("Algorithm cannot be none");
-        }
-        
-    }
 
-    //now that algorithm is selected, use the appropriate algorithm function
-</script>
 {% endblock %}
