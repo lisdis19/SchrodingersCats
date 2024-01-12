@@ -118,12 +118,12 @@ predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 print(dir(cm))
-print(ConfusionMatrixDisplay(cm))
-disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
-disp.plot()
+#print(ConfusionMatrixDisplay(cm))
+#disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
+#disp.plot()
 # hide plt.show() if you want to get the byte data below.
-plt.show()
-dot_data = tree.export_graphviz(clf, out_file=None)
+#plt.show()
+#dot_data = tree.export_graphviz(clf, out_file=None)
 
 #second model
 #clf = tree.DecisionTreeClassifier()
@@ -255,6 +255,8 @@ def make_prediction(file_path):
         uploaded_data['Predicted_Activity'] = prediction_data
         best_data = uploaded_data.iloc[uploaded_data['Predicted_Activity'] == 1]
         number_molecules = len(best_data)
+        user_data = uploaded_data.drop('Mol', axis='columns')
+        user_data.to_csv('user_prediction.csv')
         if number_molecules > 20:
             picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
             return picture
