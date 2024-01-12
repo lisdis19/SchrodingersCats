@@ -156,6 +156,7 @@ def make_prediction():
         bit_morgan = [{}]
         morgan_finger = []
         i = 0
+        bit_morgan = [{}] 
         for mol in uploaded_data['Mol']:
             bit_morgan.append({})
             morgan_finger.append(
@@ -165,6 +166,7 @@ def make_prediction():
         i += 1
         morgan_np = np.array(morgan_finger)
         morgan_df_user = pd.DataFrame(morgan_np)
+
         predict=rf.predict(morgan_df_user)
         prediction_data = np.asarray(predict)
         uploaded_data['Predicted_Activity'] = prediction_data
