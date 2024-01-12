@@ -84,7 +84,7 @@
     <option value="predict">Binary Classify</option>
   </select>
   <br><br>
-  <button type="submit" onclick="submitForm()">Submit</button>
+  <a href="{% url 'step3' %}"><button type="submit" onclick="submitForm()">Submit</button></a>
 </form>
 </div>
 
@@ -105,10 +105,10 @@
     }
 
     function submitForm() {
-        event.preventDefault();
         if(algorithm != "none"){
             //call the function for the selected algorithm
         }else{
+            event.preventDefault();
             alert("Algorithm cannot be none");
         }
         

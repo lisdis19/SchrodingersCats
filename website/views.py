@@ -13,7 +13,8 @@ def step2(request):
 def step1(request):
     return render(request, "step1.html")
 
-
+def step3(request):
+    return render(request, "step3.html")
 
 # upload_csv(
 #     #user_file_input
