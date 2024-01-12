@@ -39,17 +39,44 @@
         color: rgb(133, 190, 246);
         border-bottom: 1px solid currentColor;
     }
-
-    .dropdown {
-        text-align: center;
+    .dropdown{
+        display: flex;
+        margin: 2rem 5rem;
+    }
+    .dropdown-txt{
+        display: flex;
+        flex-direction: column;
+    }
+    .dropdown-download button{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border:0px;
+        background-color:rgb(30, 43, 95);
+        color: aliceblue;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-size: 10px;
+    }
+    .dropdown h1{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 50px;
+        font-weight: 60px;
+        color: aliceblue;
+        margin: 2rem;
     }
 
-    .dropdown h1 {
+    .dropdown h3{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 30px;
         font-weight: 40px;
         color: aliceblue;
-        margin-bottom: 2rem;
+        margin: 2rem;
+    }
+
+    .dropdown-download p{
+        color: rgb(181, 201, 219);
+        margin:0;
+        padding: 0rem 2rem;
+        font-family: 10px;
     }
 
     .result-section {
@@ -58,6 +85,11 @@
 
     .result-item {
         margin-bottom: 10px;
+    }
+
+    .dropdown-download{
+        margin-top: 10px;
+        display: flex;
     }
 </style>
 <body>
@@ -72,23 +104,22 @@
         <a href="{% url 'contact' %}">Contact</a>
     </nav>
     <div class="dropdown">
-        <h1>Here are the results on your model..</h1>
-        <h1>It looks like you yielded a .9 accuracy!</h1>
-
-        <h1>Here is your Confusion Matrix Chart</h1>
-        <img src="{% static 'website/confusion_matrix.png' %}" width="400px" height="400px" alt="molecules">
-
-        <h1>Finally, here are some details about a random molecule in your dataset!</h1>
-
-        <!-- Display algoresult strings directly -->
-        <div class="result-section">
-            <h1>Algorithm Results:</h1>
-            <div class="result-item">
-                {{ algoresult }}
+        <div class="dropdown-txt">
+        <h1>Here are the results on your prediction, it looks like these molecules are active!</h1>
+        <h3>Here are some of your active molecules</h3>
+        </div>
+        <div class="dropdown-img">
+            <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="400px" height="400px" alt="molecules">
+            <div class="dropdown-download">
+            <p>We also saved all of your results to csv</p>
+            <button>Download here</button>
             </div>
         </div>
-        <!-- End algoresult -->
 
     </div>
 </body>
+
+<script>
+    
+</script>
 {% endblock %}
