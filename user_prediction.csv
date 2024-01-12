@@ -1,0 +1,6 @@
+,Smiles,Number,Predicted_Activity
+0,CC1=CN([C@H]2C[C@H](N=[N+]=[N-])[C@@H](CO)O2)C(NC1=O)=O,1,0.0
+1,CC1=CN(C2CC(N=[N+]=[N-])C(CO)O2)C(NC1=O)=O,2,0.0
+2,CC1=CN(C2CC(N=[N+]=[N-])C(CO)O2)C(NC1=S)=O,3,0.0
+3,CC1=CN(C2CC(N=[N+]=[N-])C(CC)O2)C(NC1=O)=O,4,1.0
+4,CC1=CN(C2CC(N=[N+]=[N-])C(CC)O2)C(NC1=O)=O,5,1.0

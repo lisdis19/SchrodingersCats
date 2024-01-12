@@ -60,6 +60,8 @@
 
     
 </style>
+<body>
+    {% csrf_token %}
 
 <nav>
     <a href="{% url 'home' %}">
@@ -71,9 +73,10 @@
     <a href="{% url 'step1' %}">Services</a>
     <a href="#contact">Contact</a>
 </nav>
-<p>{{results}}</p>
+<p>{{details}}</p>
 <div class="dropdown">
-<form  method="POST" action="{% url 'select-algo' %}">
+<form  method="POST" >
+  {% csrf_token %}
     <h1>Choose an algorithm:</h1>
   <label for="choicealgo"></label>
   <select name="choicealgo" id="choicealgo" onchange="algorithmValue(this)">
@@ -92,7 +95,7 @@
 
 </div>
 
-    
+</body>
 <script>
     //This section of code stores the value of the dropdown menu
     //The menu values can be: graph, mean-squared, describe, and predict

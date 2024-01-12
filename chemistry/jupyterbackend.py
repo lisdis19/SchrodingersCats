@@ -29,18 +29,22 @@ from sklearn.metrics import roc_auc_score
 from sklearn import tree
 
 morgan_df = pd.read_csv('morgan_df_features.csv')
+print(morgan_df.shape)
 model_csv_file_retained_only_2 = pd.read_csv('activities.csv')
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
 
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True, random_seed=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True, random_state=42)
 rf=RandomForestClassifier()
 rf.fit(X_train, y_train)
+print(X_train.shape)
+print(X_test.shape)
 predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 print(dir(cm))
+rf
 
 file_path = 'user_data.csv'
 def upload_csv(file_path):
@@ -149,9 +153,11 @@ def process_csv(file_path):
 
 def make_prediction():
         picture, uploaded_data = process_csv('user_input.csv')
+        bit_morgan = [{}]
         morgan_finger = []
         i = 0
         for mol in uploaded_data['Mol']:
+            bit_morgan.append({})
             morgan_finger.append(
             rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
@@ -162,13 +168,13 @@ def make_prediction():
         predict=rf.predict(morgan_df_user)
         prediction_data = np.asarray(predict)
         uploaded_data['Predicted_Activity'] = prediction_data
-        best_data = uploaded_data.iloc[uploaded_data['Predicted_Activity'] == 1]
+        best_data = uploaded_data.loc[uploaded_data['Predicted_Activity'] == 1]
         number_molecules = len(best_data)
         user_data = uploaded_data.drop('Mol', axis='columns')
         user_data.to_csv('user_prediction.csv')
         if number_molecules > 20:
-            picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+            picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20], useSVG=True) #choose first 20 molecules
             return picture
         else:
-            picture = Draw.MolsToGridImage(best_data['Mol'])
+            picture = Draw.MolsToGridImage(best_data['Mol'], useSVG=True)
             return picture

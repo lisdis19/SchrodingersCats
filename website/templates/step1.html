@@ -88,7 +88,8 @@
 
 <h2>CSV File Upload</h2>
 
-    <form id="csvForm" enctype="multipart/form-data" method="POST">
+    <form id="csvForm" enctype="multipart/form-data" method="POST" action="{% url 'step2' %}">
+        {% csrf_token %}
         <label class="indent" for="csvFile">Select a CSV file:</label>
         <input class="indent" type="file" id="csvFile" name="csvFile" accept=".csv" required>
         <br>
