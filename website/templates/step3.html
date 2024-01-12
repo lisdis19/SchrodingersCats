@@ -1,47 +1,94 @@
-{% extends "base.html" %} {% block title %} Schrodinger's Cats {% endblock %}
+{% extends "base.html" %}
+
+{% block title %} Schrodinger's Cats {% endblock %}
+
 {% block content %}
-<style>body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Set the height to 100% of the viewport height for vertical centering */
+    }
 
-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #040244;
-    overflow: hidden;
-    min-width:100%;
-    padding:0rem 2rem;
-}
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #040244;
+        overflow: hidden;
+        width: 100%;
+        padding: 0rem 2rem;
+    }
 
-nav a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
+    nav a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
 
-nav a:hover {
-    color: rgb(133, 190, 246);
-    border-bottom: 1px solid currentColor;
-}</style>
+    nav a:hover {
+        color: rgb(133, 190, 246);
+        border-bottom: 1px solid currentColor;
+    }
+
+    .dropdown {
+        text-align: center;
+    }
+
+    .dropdown h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 30px;
+        font-weight: 40px;
+        color: aliceblue;
+        margin-bottom: 2rem;
+    }
+
+    .result-section {
+        margin-top: 20px;
+    }
+
+    .result-item {
+        margin-bottom: 10px;
+    }
+</style>
 <body>
     <nav>
         <a href="{% url 'home' %}">
-        {% load static %}
-        <img src="{% static 'website/schrodinger.png' %}" width="60px" height="60px" alt="logo">
+            {% load static %}
+            <img src="{% static 'website/schrodinger.png' %}" width="60px" height="60px" alt="logo">
         </a>
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'home' %}">About</a>
         <a href="{% url 'step1' %}">Services</a>
         <a href="{% url 'contact' %}">Contact</a>
     </nav>
-    <h1>this is step 3</h1>
-    <div>{{ algoresult }}</div>
+    <div class="dropdown">
+        <h1>Here are the results on your model..</h1>
+        <h1>It looks like you yielded a .9 accuracy!</h1>
+
+        <h1>Here is your Confusion Matrix Chart</h1>
+        <img src="{% static 'website/confusion_matrix.png' %}" width="400px" height="400px" alt="molecules">
+
+        <h1>Finally, here are some details about a random molecule in your dataset!</h1>
+
+        <!-- Display algoresult strings directly -->
+        <div class="result-section">
+            <h1>Algorithm Results:</h1>
+            <div class="result-item">
+                {{ algoresult }}
+            </div>
+        </div>
+        <!-- End algoresult -->
+
+    </div>
 </body>
 {% endblock %}
