@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from chemistry.visual_script import process_csv
-from chemistry.jupyterbackend
-from chemistry.backendUser import
+from chemistry.jupyterbackend import process_csv
+from chemistry.backendUser import process_molecular_data #describe
 # View is where you allow for contents to be seen
 # Create your views here.
 from apply_predictive_model import backendUser
@@ -28,11 +27,16 @@ def step1(request):
 def step3(request):
     return render(request, "step3.html")
 
-#def process_csvFile(request):
-#    input = request.POST.get("csvFile")
-#    output = process_csv(input)
-#    return render(request,"step2.html",{"result":output.results})
+def process_csvFile(request):
+    input = request.POST.get("csvFile")
+    output = process_csv(input)
+    return render(request,"step2.html",{"result":results})
 
+def select_algo(request):
+    input = request.POST.get(choicealgo) #this is the algo value : describe, visulaize...
+    if input == "describe":
+        output = process_molecular_data(request, test_size=0.2, random_state=42)
+    return render(request, "step3.html",{"algo result":result})
 # upload_csv(
 #     #user_file_input
 # )

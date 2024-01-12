@@ -73,7 +73,7 @@
 </nav>
 <p>{{results}}</p>
 <div class="dropdown">
-<form >
+<form  method="POST" action="{% url 'select-algo' %}">
     <h1>Choose an algorithm:</h1>
   <label for="choicealgo"></label>
   <select name="choicealgo" id="choicealgo" onchange="algorithmValue(this)">
