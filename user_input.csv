@@ -1,0 +1,6 @@
+Smiles,Number
+CC1=CN([C@H]2C[C@H](N=[N+]=[N-])[C@@H](CO)O2)C(NC1=O)=O,1
+CC1=CN(C2CC(N=[N+]=[N-])C(CO)O2)C(NC1=O)=O,2
+CC1=CN(C2CC(N=[N+]=[N-])C(CO)O2)C(NC1=S)=O,3
+CC1=CN(C2CC(N=[N+]=[N-])C(CC)O2)C(NC1=O)=O,4
+CC1=CN(C2CC(N=[N+]=[N-])C(CC)O2)C(NC1=O)=O,5
