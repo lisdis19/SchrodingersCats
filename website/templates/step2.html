@@ -35,12 +35,16 @@
 
     .dropdown{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         text-align: center;
         padding: 1rem;
-        margin-top: 1.5rem;
+        margin: 2rem 5rem;
+    }
+    .dropdown-txt{
+        display: flex;
+        flex-direction: column;
     }
     .dropdown button{
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,21 +96,25 @@
     <a href="{% url 'step1' %}">Services</a>
     <a href="{% url 'contact' %}">Contact</a>
 </nav>
-<div class="dropdown">
+
 <form action="{% url 'step3' %}">
+    <div class="dropdown">
   {% csrf_token %}
-    <h1>Thanks for this HIV dataset, here are your molecules!</h1>
-    <div>
+    <div class="dropdown-img">
         {% load static %}
         <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="400px" height="400px" alt="molecules">
     </div>
+    <div class="dropdown-txt">
+    
+    <h1>Thanks for this HIV dataset, here are your molecules!</h1>
     <h3>This looks like a binary dataset..</h3>
     <p>We suggest a Random Forest Algorithm for this dataset!</p>
   <label for="choicealgo"></label>
   <br><br>
   <a href="{% url 'step3' %}"><button type="submit">Predict</button></a>
-</form>
+    </div>
 </div>
+</form>
 </body>
 <script>
     //This section of code stores the value of the dropdown menu
