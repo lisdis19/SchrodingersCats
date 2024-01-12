@@ -36,9 +36,11 @@
     input[type=text], select, textarea {
         width: 100%;
         padding: 12px;
+        {% comment %} 
         border: 1px solid #ccc;
         border-radius: 4px;
-        box-sizing: border-box;
+        box-sizing: border-box; 
+        {% endcomment %}
         margin-top: 6px;
         margin-bottom: 16px;
         resize: vertical;
@@ -46,8 +48,8 @@
       }
       
       input[type=submit] {
-        background-color: rgba(160,63,240);
-        color: white;
+        background-color: white;
+        color: black;
         padding: 12px 20px;
         border: none;
         border-radius: 4px;
@@ -56,6 +58,7 @@
       }
       
       input[type=submit]:hover {
+        color: white;
         background-color: rgb(160,63,251);
       }
       
@@ -93,16 +96,14 @@
     <a href="{% url 'contact' %}">Contact</a>
 </nav>
 
-
-<h3>Contact Form</h3>
-<p>you can contact us here regarding any information !</p>
 <div class="container">
     <form action="">
-      <label for="fname">First Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="John">
-  
-      <label for="lname">Last Name</label>
-      <input type="text" id="lname" name="lastname" placeholder="Doe">
+
+        <h3>Contact Form</h3>
+        <p>you can contact us here regarding any information !</p>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="John Doe">
   
       <label for="subject">Subject</label>
       <textarea id="subject" name="subject" placeholder="Lorem ipsum dolor sit amet..." style="height:200px"></textarea>
