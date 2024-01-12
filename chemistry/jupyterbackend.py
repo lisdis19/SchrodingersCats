@@ -118,7 +118,6 @@ from sklearn.metrics import roc_auc_score
 from sklearn import tree
 
 
-
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
@@ -128,6 +127,10 @@ rf.fit(X_train, y_train)
 predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
+
+def prediction(test):
+    predict=rf.predict(test)
+
 
 #second model
 
