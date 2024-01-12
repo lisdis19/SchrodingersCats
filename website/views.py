@@ -37,10 +37,15 @@ def process_csvFile(request):
     return render(request,"step2.html",{"image":image, "details":details})
 
 def select_algo(request):
-    input = request.POST.get(choicealgo) #this is the algo value : describe, visulaize...
+    #input = request.POST.get("choicealgo") #this is the algo value : describe, visulaize...
+    input = "describe" #this is the algo value : describe, visulaize...
+    print(input)
     if input == "describe":
-        output = process_molecular_data(request, test_size=0.2, random_state=42)
-    return render(request, "step3.html",{"algo result":result})
+        output = process_molecular_data("hiv_dataset_3.csv", test_size=0.2, random_state=42)
+    print(output)
+    if input == "predict":
+        output = 
+    return render(request, "step3.html",{"algoresult":output})
 # upload_csv(
 #     #user_file_input
 # )
