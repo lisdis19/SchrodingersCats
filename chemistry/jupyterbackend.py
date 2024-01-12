@@ -159,9 +159,11 @@ def parse_data(uploaded_data):
 def visualize_molecules(uploaded_data):
     number_molecules = len(uploaded_data)
     if number_molecules > 20:
-        return Draw.MolsToGridImage(uploaded_data['Mol'].iloc[0:20]) #choose first 20 molecules
+        picture = Draw.MolsToGridImage(uploaded_data['Mol'].iloc[0:20]) #choose first 20 molecules
+        return picture
     else:
-        return Draw.MolsToGridImage(uploaded_data['Mol'])
+        picture = Draw.MolsToGridImage(uploaded_data['Mol'])
+        return picture
 
 def create_fingerprints(uploaded_data): # create Morgan fingerprint structure representation
     morgan_finger = []
@@ -192,6 +194,8 @@ def visualize_molecules_prediction(user_data):
     best_data = user_data.iloc[user_data['Predicted_Activity'] == 1]
     number_molecules = len(best_data)
     if number_molecules > 20:
-        return Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+        picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+        return picture
     else:
-        return Draw.MolsToGridImage(best_data['Mol'])
+        picture = Draw.MolsToGridImage(best_data['Mol'])
+        return picture
