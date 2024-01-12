@@ -119,17 +119,13 @@ cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 print(dir(cm))
 print(ConfusionMatrixDisplay(cm))
-
 disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
-
 disp.plot()
 # hide plt.show() if you want to get the byte data below.
 plt.show()
-
 dot_data = tree.export_graphviz(clf, out_file=None)
 
 #second model
-
 #clf = tree.DecisionTreeClassifier()
 #clf = clf.fit(X_train, y_train)
 #predicted = clf.predict(X_test)
