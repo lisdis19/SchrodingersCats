@@ -15,16 +15,19 @@ def home(request):
 #visualize_molecules = visualize_molecules(parsed_data) #this is a picture file
 
 
-def step1(request):
-    return render(request, "website/step1.html")
+#def step1(request):
+#    return render(request, "website/step1.html")
 
-def step2(request):
+
+
+def makePredict(request):
     image = make_prediction()
     return HttpResponse(image, content_type="image/svg+xml")
 
 def step1(request):
     return render(request, "step1.html")
-
+def step2(request):
+    return render(request, "step2.html")
 def step3(request):
     return render(request, "step3.html")
 
