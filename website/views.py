@@ -46,8 +46,6 @@ def select_algo(request):
     if input == "describe":
         output = process_molecular_data("hiv_dataset_3.csv", test_size=0.2, random_state=42)
     print(output)
-    if input == "predict":
-        output = 
     return render(request, "step3.html",{"algoresult":output})
 # upload_csv(
 #     #user_file_input

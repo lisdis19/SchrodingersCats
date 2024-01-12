@@ -87,8 +87,10 @@ def visualize_molecules(uploaded_data):
 
 def create_fingerprints(uploaded_data): # create Morgan fingerprint structure representation
     morgan_finger = []
+    bit_morgan = [{}]
     i = 0
     for mol in uploaded_data['Mol']:
+        bit_morgan.append([{}])
         morgan_finger.append(
         rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
@@ -179,9 +181,4 @@ def make_prediction():
             return picture
         else:
             picture = Draw.MolsToGridImage(best_data['Mol'], useSVG=True)
-            print(picture)
             return picture
-
-output=process_csv(morgan_df)   
-print(output)
-prediction(morgan_df, output)
