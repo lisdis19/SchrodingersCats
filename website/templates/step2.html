@@ -57,7 +57,12 @@
         color: aliceblue;
         margin-bottom: 2rem;
     }
-
+    .molecules-img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 2rem 4rem;
+    }
     
 </style>
 <body>
@@ -74,7 +79,7 @@
     <a href="{% url 'contact' %}">Contact</a>
 </nav>
 <div class="dropdown">
-<form  method="POST" >
+<form  method="POST" action = "">
   {% csrf_token %}
     <h1>Choose an algorithm:</h1>
   <label for="choicealgo"></label>
@@ -89,10 +94,11 @@
   <a href="{% url 'step3' %}"><button type="submit" onclick="submitForm()">Submit</button></a>
 </form>
 </div>
-<div>
+<div class = "molecules-img">
     {% load static %}
-    <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="100px" height="100px" alt="molecules">
+    <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="500px" height="500px" alt="molecules">
 </div>
+
 </body>
 <script>
     //This section of code stores the value of the dropdown menu
