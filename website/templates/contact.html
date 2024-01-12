@@ -33,31 +33,6 @@
             border-bottom: 1px solid currentColor;
         }
 
-    .dropdown{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 1rem;
-        margin-top: 3rem;
-    }
-    .dropdown button{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        border:0px;
-        background-color:rgb(30, 43, 95);
-        color: aliceblue;
-        padding: 0.5rem 2rem;
-        border-radius: 10px;
-    }
-    .dropdown h1{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 30px;
-        font-weight: 40px;
-        color: aliceblue;
-        margin-bottom: 2rem;
-    }
-
     input[type=text], select, textarea {
         width: 100%;
         padding: 12px;
@@ -67,25 +42,37 @@
         margin-top: 6px;
         margin-bottom: 16px;
         resize: vertical;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       
       input[type=submit] {
-        background-color: #04AA6D;
+        background-color: rgba(160,63,240);
         color: white;
         padding: 12px 20px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       
       input[type=submit]:hover {
-        background-color: #45a049;
+        background-color: rgb(160,63,251);
       }
       
       .container {
         border-radius: 5px;
-        background-color: #f2f2f2;
+        background-color: #ccc;
         padding: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      h3{
+        color: white;
+      }
+
+      p{
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
     
@@ -108,9 +95,9 @@
 
 
 <h3>Contact Form</h3>
-
+<p>you can contact us here regarding any information !</p>
 <div class="container">
-    <form action="/action_page.php">
+    <form action="">
       <label for="fname">First Name</label>
       <input type="text" id="fname" name="firstname" placeholder="John">
   
