@@ -2,6 +2,37 @@
 {% block content %}
 
 <style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #040244;
+            overflow: hidden;
+            min-width:100%;
+            padding:0rem 2rem;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: rgb(133, 190, 246);
+            border-bottom: 1px solid currentColor;
+        }
+
     .dropdown{
         display: flex;
         flex-direction: column;
@@ -26,12 +57,18 @@
         color: aliceblue;
         margin-bottom: 2rem;
     }
+
+    
 </style>
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
+    <a href="{% url 'home' %}">
+    {% load static %}
+    <img src="{% static 'website/schrodinger.png' %}" width="60px" height="60px" alt="logo">
+    </a>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'home' %}">About</a>
+    <a href="{% url 'step1' %}">Services</a>
     <a href="#contact">Contact</a>
 </nav>
 
@@ -50,6 +87,11 @@
   <button type="submit" onclick="submitForm()">Submit</button>
 </form>
 </div>
+
+<div class="csv__img-results">
+
+</div>
+
     
 <script>
     //This section of code stores the value of the dropdown menu
