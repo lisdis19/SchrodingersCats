@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% block title %} Schrodinger's Cats {% endblock %}
+{% block content %}
+
+<style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #040244;
+            overflow: hidden;
+            min-width:100%;
+            padding:0rem 2rem;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: rgb(133, 190, 246);
+            border-bottom: 1px solid currentColor;
+        }
+
+    .dropdown{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 3rem;
+    }
+    .dropdown button{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        border:0px;
+        background-color:rgb(30, 43, 95);
+        color: aliceblue;
+        padding: 0.5rem 2rem;
+        border-radius: 10px;
+    }
+    .dropdown h1{
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 30px;
+        font-weight: 40px;
+        color: aliceblue;
+        margin-bottom: 2rem;
+    }
+
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+      
+      input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
+      
+      .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+
+    
+</style>
+
+
+<body>
+    {% csrf_token %}
+
+<nav>
+    <a href="{% url 'home' %}">
+    {% load static %}
+    <img src="{% static 'website/schrodinger.png' %}" width="60px" height="60px" alt="logo">
+    </a>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'home' %}">About</a>
+    <a href="{% url 'step1' %}">Services</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+
+<h3>Contact Form</h3>
+
+<div class="container">
+    <form action="/action_page.php">
+      <label for="fname">First Name</label>
+      <input type="text" id="fname" name="firstname" placeholder="John">
+  
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Doe">
+  
+      <label for="subject">Subject</label>
+      <textarea id="subject" name="subject" placeholder="Lorem ipsum dolor sit amet..." style="height:200px"></textarea>
+  
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  
+  </body>
+
+
+{% endblock %}
