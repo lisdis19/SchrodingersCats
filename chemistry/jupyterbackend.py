@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import copy
 import stat
 
@@ -118,18 +118,14 @@ predict=rf.predict(X_test)
 cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
 print(cm)
 print(dir(cm))
-print(ConfusionMatrixDisplay(cm))
-
-disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
-
-disp.plot()
+#print(ConfusionMatrixDisplay(cm))
+#disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
+#disp.plot()
 # hide plt.show() if you want to get the byte data below.
-plt.show()
-
-dot_data = tree.export_graphviz(clf, out_file=None)
+#plt.show()
+#dot_data = tree.export_graphviz(clf, out_file=None)
 
 #second model
-
 #clf = tree.DecisionTreeClassifier()
 #clf = clf.fit(X_train, y_train)
 #predicted = clf.predict(X_test)
@@ -202,7 +198,7 @@ def write_csv(uploaded_data):
     return user_data
 
 def visualize_molecules_prediction(user_data):
-    best_data = user_data.iloc[user_data['Predicted_Activity'] == 1]
+    best_data = user_data.loc[user_data['Predicted_Activity'] == 1]
     number_molecules = len(best_data)
     if number_molecules > 20:
         picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
@@ -215,7 +211,7 @@ def process_csv(file_path):
     try:
         uploaded_data = pd.read_csv(file_path, sep=',')  # Adjust the delimiter if needed
     except pd.errors.ParserError:
-        print("Error reading CSV file. Check for formatting issues in the file.")
+        return print("Error reading CSV file. Check for formatting issues in the file.")
         uploaded_data = None  # You can choose to handle this differently based on your needs
     # Continue with the rest of your code, if applicable
     # For example, you can print the DataFrame or perform further operations
@@ -242,20 +238,30 @@ def process_csv(file_path):
             picture = Draw.MolsToGridImage(uploaded_data['Mol'])
             return picture, uploaded_data
 
-def make_prediction(uploaded_data):
-    morgan_finger = []
-    i = 0
-    for mol in uploaded_data['Mol']:
-        morgan_finger.append(
-        rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
+def make_prediction(file_path):
+        picture, uploaded_data = process_csv(file_path)
+        morgan_finger = []
+        i = 0
+        for mol in uploaded_data['Mol']:
+            morgan_finger.append(
+            rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
             )
-    i += 1
-    morgan_np = np.array(morgan_finger)
-    morgan_df_user = pd.DataFrame(morgan_np)
-    predict=rf.predict(morgan_df_user)
-    prediction_data = np.asarray(predict)
-    uploaded_data['Predicted_Activity'] = prediction_data
-    return uploaded_data
+        i += 1
+        morgan_np = np.array(morgan_finger)
+        morgan_df_user = pd.DataFrame(morgan_np)
+        predict=rf.predict(morgan_df_user)
+        prediction_data = np.asarray(predict)
+        uploaded_data['Predicted_Activity'] = prediction_data
+        best_data = uploaded_data.iloc[uploaded_data['Predicted_Activity'] == 1]
+        number_molecules = len(best_data)
+        user_data = uploaded_data.drop('Mol', axis='columns')
+        user_data.to_csv('user_prediction.csv')
+        if number_molecules > 20:
+            picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+            return picture
+        else:
+            picture = Draw.MolsToGridImage(best_data['Mol'])
+            return picture
 
 
