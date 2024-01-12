@@ -28,14 +28,13 @@ from sklearn.metrics import roc_auc_score
 
 from sklearn import tree
 
-
 morgan_df = pd.read_csv('morgan_df_features.csv')
 model_csv_file_retained_only_2 = pd.read_csv('activities.csv')
-
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True)
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True, random_seed=42)
 rf=RandomForestClassifier()
 rf.fit(X_train, y_train)
 predict=rf.predict(X_test)
@@ -61,7 +60,7 @@ def parse_data(uploaded_data):
     bad_smiles = 0
     for smi in uploaded_data['Smiles']:
         try:  # Try converting the SMILES to a mol object
-            rdMolStandardize.StandardizeSmiles(smi)
+            #rdMolStandardize.StandardizeSmiles(smi)
             mol = Chem.MolFromSmiles(smi)
             mol_object_list.append(mol)
         except:  # Print the SMILES if there was an error in converting
@@ -148,8 +147,8 @@ def process_csv(file_path):
             picture = Draw.MolsToGridImage(uploaded_data['Mol'])
             return picture, uploaded_data
 
-def make_prediction(file_path):
-        picture, uploaded_data = process_csv(file_path)
+def make_prediction():
+        picture, uploaded_data = process_csv('user_input.csv')
         morgan_finger = []
         i = 0
         for mol in uploaded_data['Mol']:

@@ -111,13 +111,10 @@ model_csv_file_retained_only_2.to_csv('activities.csv')
 features = morgan_df
 labels = model_csv_file_retained_only_2['Activity']
 
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True)
-rf=RandomForestClassifier()
-rf.fit(X_train, y_train)
-predict=rf.predict(X_test)
-cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
-print(cm)
-print(dir(cm))
+
+
+
+
 #print(ConfusionMatrixDisplay(cm))
 #disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
 #disp.plot()
