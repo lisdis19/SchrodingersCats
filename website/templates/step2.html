@@ -79,26 +79,20 @@
     <a href="{% url 'contact' %}">Contact</a>
 </nav>
 <div class="dropdown">
-<form  method="POST" action = "">
+<form  method="POST" action="{% url 'step3' %}"action = "">
   {% csrf_token %}
-    <h1>Choose an algorithm:</h1>
+    <h1>Thanks for this HIV dataset.. here are your molecules!:</h1>
+    <div>
+        {% load static %}
+        <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="100px" height="100px" alt="molecules">
+    </div>
+    <h1>This looks like a binary dataset..</h1>
+    <h1>We suggest a Random Forest Algorithm for this dataset!</h1>
   <label for="choicealgo"></label>
-  <select name="choicealgo" id="choicealgo" onchange="algorithmValue(this)">
-    <option value="none">None</option>
-    <option value="graph">Graph</option>
-    <option value="mean-squared">Visualize</option>
-    <option value="describe">Describe</option>
-    <option value="predict">Binary Classify</option>
-  </select>
   <br><br>
-  <a href="{% url 'step3' %}"><button type="submit" onclick="submitForm()">Submit</button></a>
+  <a href="{% url 'step3' %}"><button type="submit" onclick="submitForm()">Predict</button></a>
 </form>
 </div>
-<div class = "molecules-img">
-    {% load static %}
-    <img src="{% static 'website/predicted_good_molecules_2.png' %}" width="500px" height="500px" alt="molecules">
-</div>
-
 </body>
 <script>
     //This section of code stores the value of the dropdown menu
@@ -108,12 +102,12 @@
     function algorithmValue(choicealgo) {
         event.preventDefault();
         algorithm = choicealgo.value;
-        console.log(algorithm)
+        console.log("algorithm selection", algorithm)
     }
 
     function submitForm() {
         if(algorithm != "none"){
-            //call the function for the selected algorithm
+            //call S function for the selected algorithm
         }else{
             event.preventDefault();
             alert("Algorithm cannot be none");
