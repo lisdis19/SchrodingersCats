@@ -211,7 +211,7 @@ def process_csv(file_path):
     try:
         uploaded_data = pd.read_csv(file_path, sep=',')  # Adjust the delimiter if needed
     except pd.errors.ParserError:
-        print("Error reading CSV file. Check for formatting issues in the file.")
+        return print("Error reading CSV file. Check for formatting issues in the file.")
         uploaded_data = None  # You can choose to handle this differently based on your needs
     # Continue with the rest of your code, if applicable
     # For example, you can print the DataFrame or perform further operations
@@ -233,25 +233,54 @@ def process_csv(file_path):
         number_molecules = len(uploaded_data)
         if number_molecules > 20:
             picture = Draw.MolsToGridImage(uploaded_data['Mol'].iloc[0:20]) #choose first 20 molecules
-            return picture, uploaded_data
+            return picture
         else:
             picture = Draw.MolsToGridImage(uploaded_data['Mol'])
-            return picture, uploaded_data
+            return picture
 
-def make_prediction(uploaded_data):
-    morgan_finger = []
-    i = 0
-    for mol in uploaded_data['Mol']:
-        morgan_finger.append(
-        rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
+def make_prediction(file_path):
+    try:
+        uploaded_data = pd.read_csv(file_path, sep=',')  # Adjust the delimiter if needed
+    except pd.errors.ParserError:
+        return print("Error reading CSV file. Check for formatting issues in the file.")
+        uploaded_data = None  # You can choose to handle this differently based on your needs
+    # Continue with the rest of your code, if applicable
+    # For example, you can print the DataFrame or perform further operations
+    if uploaded_data is not None:
+        mol_object_list = []
+        bad_smiles = 0
+        for smi in uploaded_data['Smiles']:
+            try:  # Try converting the SMILES to a mol object
+                rdMolStandardize.StandardizeSmiles(smi)
+                mol = Chem.MolFromSmiles(smi)
+                mol_object_list.append(mol)
+            except:  # Print the SMILES if there was an error in converting
+                mol_object_list.append('bad_molecule')
+                bad_smiles += 1
+                #print(smi)
+                #print(bad_smiles)
+        uploaded_data['Mol'] = mol_object_list
+        uploaded_data = uploaded_data.loc[uploaded_data['Mol'] != "bad_molecule"]
+        morgan_finger = []
+        i = 0
+        for mol in uploaded_data['Mol']:
+            morgan_finger.append(
+            rdMolDescriptors.GetMorganFingerprintAsBitVect(mol,
                                                      radius = 2, nBits = 1024, bitInfo=bit_morgan[i] )
             )
-    i += 1
-    morgan_np = np.array(morgan_finger)
-    morgan_df_user = pd.DataFrame(morgan_np)
-    predict=rf.predict(morgan_df_user)
-    prediction_data = np.asarray(predict)
-    uploaded_data['Predicted_Activity'] = prediction_data
-    return uploaded_data
+        i += 1
+        morgan_np = np.array(morgan_finger)
+        morgan_df_user = pd.DataFrame(morgan_np)
+        predict=rf.predict(morgan_df_user)
+        prediction_data = np.asarray(predict)
+        uploaded_data['Predicted_Activity'] = prediction_data
+        best_data = uploaded_data.iloc[uploaded_data['Predicted_Activity'] == 1]
+        number_molecules = len(best_data)
+        if number_molecules > 20:
+            picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
+            return picture
+        else:
+            picture = Draw.MolsToGridImage(best_data['Mol'])
+            return picture
 
 
