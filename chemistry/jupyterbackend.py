@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import copy
 import stat
 
@@ -198,7 +198,7 @@ def write_csv(uploaded_data):
     return user_data
 
 def visualize_molecules_prediction(user_data):
-    best_data = user_data.iloc[user_data['Predicted_Activity'] == 1]
+    best_data = user_data.loc[user_data['Predicted_Activity'] == 1]
     number_molecules = len(best_data)
     if number_molecules > 20:
         picture = Draw.MolsToGridImage(best_data['Mol'].iloc[0:20]) #choose first 20 molecules
