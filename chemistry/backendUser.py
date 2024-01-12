@@ -24,9 +24,13 @@ def process_molecular_data(file_path, test_size=0.2, random_state=42):
     properties = rdMolDescriptors.Properties()
     names = properties.GetPropertyNames()
     values = properties.ComputeProperties(m)
+    output_string = ""
     for name, value in zip(names, values):
-        print(f"{name}: {value}")
+        #print(f"{name}: {value}")
+        output_string += f"{name}: {value}\n"
+    return output_string
 
 # Example usage
 file_path = 'chemistry/hiv_dataset_3.csv'
 process_molecular_data(file_path)
+
