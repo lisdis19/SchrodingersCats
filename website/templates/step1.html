@@ -106,18 +106,17 @@
             var file = fileInput.files[0];
 
             if (file) {
-                alert('File selected: ' + file.name);
+                var imageElement = document.createElement('img');
 
-                // You can perform additional actions with the selected file here.
-                // For example, you can use FileReader to read the content of the file.
+                // Set the source (replace 'image_path' with the actual path or URL of your image)
+                imageElement.src = '../static/website/uploaded_molecules.png';
 
-                // Example: Reading content of the file
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var content = e.target.result;
-                    console.log('File content:', content);
-                };
-                reader.readAsText(file);
+                // Set alt text and any other attributes
+                imageElement.alt = 'Image Alt Text';
+
+                // Append the image element to the specified container
+                var container = document.getElementById('imageContainer');
+                container.appendChild(imageElement);
             } else {
                 alert('Please select a CSV file');
             }
