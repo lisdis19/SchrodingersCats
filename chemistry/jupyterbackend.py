@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import copy
 import stat
 
@@ -95,3 +96,66 @@ morgan_df = pd.DataFrame(morgan_np)
 morgan_df.to_csv('morgan_df_features.csv')
 model_csv_file_retained_only_2.to_csv('activities.csv')
 
+
+import numpy as np
+import pandas as pd
+import copy
+import stat
+from rdkit import Chem, RDConfig, rdBase, DataStructs
+from rdkit.Chem import PandasTools, AllChem, Draw, rdMolDescriptors, GraphDescriptors, Descriptors, rdFMCS
+from rdkit.Chem.Draw import rdDepictor, rdMolDraw2D
+from rdkit.ML.Descriptors import MoleculeDescriptors
+
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+import os
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score, cross_val_predict
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+from sklearn.metrics import roc_auc_score
+
+from sklearn import tree
+
+
+
+features = morgan_df
+labels = model_csv_file_retained_only_2['Activity']
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.25, shuffle=True)
+rf=RandomForestClassifier()
+rf.fit(X_train, y_train)
+predict=rf.predict(X_test)
+cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predict))
+print(cm)
+
+#second model
+
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X_train, y_train)
+predicted = clf.predict(X_test)
+cm = confusion_matrix(np.asarray(y_test).reshape(-1), np.asarray(predicted))
+print(dir(cm))
+print(ConfusionMatrixDisplay(cm))
+
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=clf.classes_)
+
+disp.plot()
+# hide plt.show() if you want to get the byte data below.
+plt.show()
+
+dot_data = tree.export_graphviz(clf, out_file=None)
+
+# uncomment below to get the byte data and comment plt.show(), if you dont it will truncate the data.
+# from io import BytesIO
+# import base64
+
+# # Save the plot to a BytesIO object
+# buffer = BytesIO()
+# plt.savefig(buffer, format='png')
+# buffer.seek(0)
+
+# # Encode the BytesIO content to base64
+# plot_data = base64.b64encode(buffer.read()).decode()
+# print(plot_data)
