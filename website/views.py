@@ -16,6 +16,10 @@ def step1(request):
 def step3(request):
     return render(request, "step3.html")
 
+#def process_csvFile(request):
+#    input = request.POST.get("csvFile")
+#    output = process_
+
 # upload_csv(
 #     #user_file_input
 # )
