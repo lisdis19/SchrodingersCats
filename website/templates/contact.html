@@ -64,7 +64,7 @@
       
       .container {
         border-radius: 5px;
-        background-color: #ccc;
+        {% comment %} background-color: #ccc; {% endcomment %}
         padding: 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
@@ -95,6 +95,8 @@
     <a href="{% url 'step1' %}">Services</a>
     <a href="{% url 'contact' %}">Contact</a>
 </nav>
+
+<br> <br>
 
 <div class="container">
     <form action="">
